@@ -12,14 +12,15 @@ RUN yum -y install \
 ENV TINI_VERSION v0.16.1
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
+ADD https://raw.githubusercontent.com/hareeqi/docker-nfs-ganesha/master/rootfs/opt/start_nfs.sh /opt/start_nfs.sh
 RUN set -x \
     && export GNUPGHOME="$(mktemp -d)" \
     && gpg2 --keyserver ha.pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
     && gpg2 --verify /tini.asc \
     && rm -rf "$GNUPGHOME" /tini.asc \
-    && chmod +x /tini
+    && chmod +x /tini \
+    && chmod +x /opt/start_nfs.sh
 
-COPY rootfs /
 
 VOLUME ["/data/nfs"]
 
