@@ -1,10 +1,10 @@
 FROM fedora:29
-MAINTAINER marc@slintes.net
 
 # Install dependencies
 RUN yum -y install \
     nfs-ganesha nfs-ganesha-vfs \
     nfs-utils rpcbind && \
+    cifs-utils && \
     # Clean cache
     yum -y clean all
 
@@ -22,10 +22,6 @@ RUN set -x \
     && chmod +x /opt/start_nfs.sh
 
 
-VOLUME ["/data/nfs"]
-
-# NFS ports
-EXPOSE 111 111/udp 662 2049 38465-38467
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["/opt/start_nfs.sh"]
