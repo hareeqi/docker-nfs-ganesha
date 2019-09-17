@@ -3,8 +3,8 @@ FROM fedora:29
 # Install dependencies
 RUN yum -y install \
     nfs-ganesha nfs-ganesha-vfs \
-    nfs-utils rpcbind && \
-    cifs-utils && \
+    nfs-utils rpcbind \
+    cifs-utils \
     # Clean cache
     yum -y clean all
 
